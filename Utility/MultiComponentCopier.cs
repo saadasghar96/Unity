@@ -8,7 +8,7 @@ using UnityEngine;
 public class MultiComponentCopierWindow : EditorWindow
 {
     // Add menu item named "MultiPropertyCopier" to the 'Knights' Menu Section
-    [MenuItem("Utility/Knights/Multi-Component Copier")]
+    [MenuItem("Earth People Studio/Multi-Component Copier")]
     public static void ShowWindow() => GetWindow(typeof(MultiComponentCopier));
 }
 
@@ -1612,13 +1612,6 @@ public class Instructions : EditorWindow
         GUILayout.Label("8. Done.");
         GUILayout.Space(10f);
 
-        GUIStyle gStyle = new GUIStyle();
-        gStyle.fontSize = 8;
-        gStyle.alignment = TextAnchor.MiddleCenter;
-        gStyle.normal.textColor = Color.white;
-
-        GUILayout.Label("pizza khila de koi mehnat ki hai :(", gStyle);
-
         if (GUILayout.Button("CLOSE", GUILayout.Height(50))) Close();
     }
 }
@@ -1667,18 +1660,18 @@ public class Variables_MultiComponentCopier : EditorWindow
 public class MultiComponentCleanerWindow : EditorWindow
 {
     // Add menu item named "MultiPropertyCopier" to the 'Knights' Menu Section
-    [MenuItem("Utility/Knights/Multi-Component Cleaner")]
+    [MenuItem("Earth People Studio/Multi-Component Cleaner")]
     public static void ShowWindow() => GetWindow(typeof(MultiComponentCleaner));
 }
 
 public class MultiComponentCleaner : EditorWindow
 {
-    Variables_MultiComponentCleaner variables_MultiComponentCopier;
+    Variables_MultiComponentCleaner variables_MultiComponentCleaner;
 
     public void OnGUI()
     {
         // Just instantiate once
-        if (variables_MultiComponentCopier == null) { variables_MultiComponentCopier = new Variables_MultiComponentCleaner(); }
+        if (variables_MultiComponentCleaner == null) { variables_MultiComponentCleaner = new Variables_MultiComponentCleaner(); }
 
         // ~ Deep Cleaner
         // Title
@@ -1703,50 +1696,50 @@ public class MultiComponentCleaner : EditorWindow
         EditorGUILayout.Space();
 
         // Progress Bar Rect
-        variables_MultiComponentCopier.progressBarRect = EditorGUILayout.BeginVertical();
+        variables_MultiComponentCleaner.progressBarRect = EditorGUILayout.BeginVertical();
 
         // Just a dummy line, doesn't do anything special but keeps the structure together to display progress bar
         GUILayout.Label("Dummy Bar");
         GUILayout.Label("Disable this line if you want to make the progress bar thinner");
 
         // Progress Bar Color
-        GUI.color = variables_MultiComponentCopier.progressBarColor;
+        GUI.color = variables_MultiComponentCleaner.progressBarColor;
 
-        EditorGUI.ProgressBar(variables_MultiComponentCopier.progressBarRect, variables_MultiComponentCopier.progressIndex / 100, variables_MultiComponentCopier.progressBarText);
+        EditorGUI.ProgressBar(variables_MultiComponentCleaner.progressBarRect, variables_MultiComponentCleaner.progressIndex / 100, variables_MultiComponentCleaner.progressBarText);
 
         // Progress Bar
-        if (variables_MultiComponentCopier.progressIndex != 0 && variables_MultiComponentCopier.objectsToClean.Length != 0 && !variables_MultiComponentCopier.progressError || variables_MultiComponentCopier.objectClean)
+        if (variables_MultiComponentCleaner.progressIndex != 0 && variables_MultiComponentCleaner.objectsToClean.Length != 0 && !variables_MultiComponentCleaner.progressError || variables_MultiComponentCleaner.objectClean)
         {
-            if (variables_MultiComponentCopier.objectClean)
+            if (variables_MultiComponentCleaner.objectClean)
             {
-                variables_MultiComponentCopier.progressBarText = "OBJECT IS ALREADY CLEAN \n ZERO COMPONENTS FOUND";
-                EditorGUI.ProgressBar(variables_MultiComponentCopier.progressBarRect,
-                1, variables_MultiComponentCopier.progressBarText);
+                variables_MultiComponentCleaner.progressBarText = "OBJECT IS ALREADY CLEAN \n ZERO COMPONENTS FOUND";
+                EditorGUI.ProgressBar(variables_MultiComponentCleaner.progressBarRect,
+                1, variables_MultiComponentCleaner.progressBarText);
             }
             else
             {
                 UpdateProgressBarCompletedText();
-                EditorGUI.ProgressBar(variables_MultiComponentCopier.progressBarRect,
-                    variables_MultiComponentCopier.progressIndex / variables_MultiComponentCopier.progressIndex, variables_MultiComponentCopier.progressBarText);
+                EditorGUI.ProgressBar(variables_MultiComponentCleaner.progressBarRect,
+                    variables_MultiComponentCleaner.progressIndex / variables_MultiComponentCleaner.progressIndex, variables_MultiComponentCleaner.progressBarText);
             }
         }
-        else if (variables_MultiComponentCopier.progressError) EditorGUI.ProgressBar(variables_MultiComponentCopier.progressBarRect, 0f / 1f, variables_MultiComponentCopier.progressBarText);
-        else { EditorGUI.ProgressBar(variables_MultiComponentCopier.progressBarRect, 0f / 1f, "DRAG & DROP AND PRESS CLEAN \n TOGGLE DEEP CLEAN TO REMOVE CHILDREN COMPONENTS"); ColorProgressBar(variables_MultiComponentCopier.idleColor); }
+        else if (variables_MultiComponentCleaner.progressError) EditorGUI.ProgressBar(variables_MultiComponentCleaner.progressBarRect, 0f / 1f, variables_MultiComponentCleaner.progressBarText);
+        else { EditorGUI.ProgressBar(variables_MultiComponentCleaner.progressBarRect, 0f / 1f, "DRAG & DROP AND PRESS CLEAN \n TOGGLE DEEP CLEAN TO REMOVE CHILDREN COMPONENTS"); ColorProgressBar(variables_MultiComponentCleaner.idleColor); }
 
         // Reset Color
-        GUI.color = variables_MultiComponentCopier.idleColor;
+        GUI.color = variables_MultiComponentCleaner.idleColor;
 
         EditorGUILayout.EndVertical();
 
         // Scrollable
         EditorGUILayout.BeginVertical();
-        variables_MultiComponentCopier.scrollPos = EditorGUILayout.BeginScrollView(variables_MultiComponentCopier.scrollPos, false, false);
+        variables_MultiComponentCleaner.scrollPos = EditorGUILayout.BeginScrollView(variables_MultiComponentCleaner.scrollPos, false, false);
 
         // Space
         EditorGUILayout.Space();
 
         // Serialized Variables
-        SerializedObject serializedObject = new SerializedObject(variables_MultiComponentCopier);
+        SerializedObject serializedObject = new SerializedObject(variables_MultiComponentCleaner);
 
         // ~ Deep Clean
 
@@ -1756,22 +1749,24 @@ public class MultiComponentCleaner : EditorWindow
         EditorGUILayout.PropertyField(serializedObject.FindProperty("objectsToClean"), true);
         serializedObject.ApplyModifiedProperties();
 
+        variables_MultiComponentCleaner.component = EditorGUILayout.TextField("Component", variables_MultiComponentCleaner.component);
+
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Deep Clean");
-        variables_MultiComponentCopier.deepClean = EditorGUILayout.Toggle(variables_MultiComponentCopier.deepClean);
+        variables_MultiComponentCleaner.deepClean = EditorGUILayout.Toggle(variables_MultiComponentCleaner.deepClean);
         EditorGUILayout.EndHorizontal();
 
         // Space x 2
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
-        if (GUILayout.Button("CLEAN", GUILayout.Height(40))) { variables_MultiComponentCopier.objectClean = false; ColorProgressBar(variables_MultiComponentCopier.loadingColor); ResetProgressBar(); if (variables_MultiComponentCopier.deepClean) { DeepClean(); } else { Clean(); } }
+        if (GUILayout.Button("CLEAN", GUILayout.Height(40))) { variables_MultiComponentCleaner.objectClean = false; ColorProgressBar(variables_MultiComponentCleaner.loadingColor); ResetProgressBar(); if (variables_MultiComponentCleaner.deepClean) { DeepClean(); } else { Clean(); } }
 
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndScrollView();
 
         // Keep track of deep clean toggle state
-        if (variables_MultiComponentCopier.deepClean != variables_MultiComponentCopier.deepCleanToggled) { variables_MultiComponentCopier.objectClean = false; ResetProgressBar(); ColorProgressBar(variables_MultiComponentCopier.idleColor); variables_MultiComponentCopier.deepCleanToggled = variables_MultiComponentCopier.deepClean; }
+        if (variables_MultiComponentCleaner.deepClean != variables_MultiComponentCleaner.deepCleanToggled) { variables_MultiComponentCleaner.objectClean = false; ResetProgressBar(); ColorProgressBar(variables_MultiComponentCleaner.idleColor); variables_MultiComponentCleaner.deepCleanToggled = variables_MultiComponentCleaner.deepClean; }
 
         // Hotkeys, uncomment if you want to include keyboard shortcuts (I didn't)
         //Hotkeys();
@@ -1781,34 +1776,27 @@ public class MultiComponentCleaner : EditorWindow
     // Resets progress bar stats to base
     public void ResetProgressBar()
     {
-        variables_MultiComponentCopier.progressError = false; // Reset error texts
-        variables_MultiComponentCopier.progressIndex = 0; // Reset progress bar's current progress index to base
-        EditorGUI.ProgressBar(variables_MultiComponentCopier.progressBarRect, 0f / 1f, "DRAG & DROP AND PRESS COPY"); // Reset Text
+        variables_MultiComponentCleaner.progressError = false; // Reset error texts
+        variables_MultiComponentCleaner.progressIndex = 0; // Reset progress bar's current progress index to base
+        EditorGUI.ProgressBar(variables_MultiComponentCleaner.progressBarRect, 0f / 1f, "DRAG & DROP AND PRESS COPY"); // Reset Text
     }
 
     // Updates the color of the progress bar during Idle, Loading & Error for glamour
     public void ColorProgressBar(Color color)
     {
-        if (color == variables_MultiComponentCopier.errorColor) variables_MultiComponentCopier.progressError = true; // Everytime we get an error
-        variables_MultiComponentCopier.progressBarColor = color;
+        if (color == variables_MultiComponentCleaner.errorColor) variables_MultiComponentCleaner.progressError = true; // Everytime we get an error
+        variables_MultiComponentCleaner.progressBarColor = color;
     }
 
     // Show Completion Text
     public void UpdateProgressBarCompletedText()
     {
-        if (variables_MultiComponentCopier.deepClean)
-            variables_MultiComponentCopier.progressBarText = "PROGRESS: " + variables_MultiComponentCopier.progressIndex + "/" + variables_MultiComponentCopier.progressIndex + " \n " + " COMPONENTS HAVE BEEN DEEP CLEANED";
+        if (variables_MultiComponentCleaner.deepClean)
+            variables_MultiComponentCleaner.progressBarText = "PROGRESS: " + variables_MultiComponentCleaner.progressIndex + "/" + variables_MultiComponentCleaner.progressIndex + " \n " + " COMPONENTS HAVE BEEN DEEP CLEANED";
         else
-            variables_MultiComponentCopier.progressBarText = "PROGRESS: " + variables_MultiComponentCopier.progressIndex + "/" + variables_MultiComponentCopier.progressIndex + " \n " + " COMPONENTS HAVE BEEN CLEANED";
+            variables_MultiComponentCleaner.progressBarText = "PROGRESS: " + variables_MultiComponentCleaner.progressIndex + "/" + variables_MultiComponentCleaner.progressIndex + " \n " + " COMPONENTS HAVE BEEN CLEANED";
 
     }
-    #endregion
-
-    #region Hotkeys Function
-    //void HotKeys()
-    //{
-    //    Check for Events here if you want these commands on Hotkeys
-    //}
     #endregion
 
     #region Main Functions
@@ -1816,7 +1804,7 @@ public class MultiComponentCleaner : EditorWindow
     {
         try
         {
-            foreach (GameObject objectToClean in variables_MultiComponentCopier.objectsToClean)
+            foreach (GameObject objectToClean in variables_MultiComponentCleaner.objectsToClean)
             {
                 foreach (Transform child in objectToClean.GetComponentsInChildren<Transform>())
                 {
@@ -1824,17 +1812,20 @@ public class MultiComponentCleaner : EditorWindow
                     {
                         foreach (Component comp in childOfChild.GetComponents<Component>())
                         {
-                            if (comp.GetType().ToString() != "UnityEngine.Transform")
+                            if (comp != null)
                             {
-                                DestroyImmediate(comp);
-                                variables_MultiComponentCopier.progressIndex++;
+                                if (comp.GetType().ToString().ToLower().Contains(variables_MultiComponentCleaner.component.ToLower()))
+                                {
+                                    DestroyImmediate(comp);
+                                    variables_MultiComponentCleaner.progressIndex++;
+                                }
                             }
                         }
                     }
                 }
             }
 
-            if (variables_MultiComponentCopier.progressIndex == 0) { variables_MultiComponentCopier.objectClean = true; }
+            if (variables_MultiComponentCleaner.progressIndex == 0) { variables_MultiComponentCleaner.objectClean = true; }
         }
         catch (UnityException) { }
     }
@@ -1843,26 +1834,28 @@ public class MultiComponentCleaner : EditorWindow
     {
         try
         {
-            foreach (GameObject objectToClean in variables_MultiComponentCopier.objectsToClean)
+            foreach (GameObject objectToClean in variables_MultiComponentCleaner.objectsToClean)
             {
                 foreach (Component comp in objectToClean.GetComponents<Component>())
                 {
-                    if (comp.GetType().ToString() != "UnityEngine.Transform")
+                    if (comp != null)
                     {
-                        DestroyImmediate(comp);
-                        variables_MultiComponentCopier.progressIndex++;
+                        if (comp.GetType().ToString().ToLower().Contains(variables_MultiComponentCleaner.component.ToLower()))
+                        {
+                            DestroyImmediate(comp);
+                            variables_MultiComponentCleaner.progressIndex++;
+                        }
                     }
                 }
             }
 
-            if (variables_MultiComponentCopier.progressIndex == 0) { variables_MultiComponentCopier.objectClean = true; }
+            if (variables_MultiComponentCleaner.progressIndex == 0) { variables_MultiComponentCleaner.objectClean = true; }
         }
         catch (UnityException) { }
     }
     #endregion
 }
 
-#region Global Variables
 public class Variables_MultiComponentCleaner : EditorWindow
 {
     // Main
@@ -1881,7 +1874,11 @@ public class Variables_MultiComponentCleaner : EditorWindow
     public Color loadingColor = new Color(0.15f, 1f, 0.35f);
     public Color idleColor = Color.white;
     public Color progressBarColor = Color.white;
+    public string component;
 }
+
+#region Global Variables
+
 #endregion
 #endregion
 #endif
